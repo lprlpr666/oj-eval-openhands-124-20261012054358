@@ -12,3 +12,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall")
 
 # For large input/output, we might need these flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DLOCAL")
+
+# Suppress scanf warnings
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-result")

@@ -1,7 +1,6 @@
-#include <iostream>
+#include <cstdio>
 #include <vector>
 #include <algorithm>
-#include <climits>
 using namespace std;
 
 class SegmentTree {
@@ -77,27 +76,42 @@ private:
 public:
     SegmentTree(int size) {
         n = size;
-        tree.resize(4 * n, 0);
-        lazy.resize(4 * n, 0);
-        build(1, 1, n);
+        if (n > 0) {
+            tree.resize(4 * n, 0);
+            lazy.resize(4 * n, 0);
+            build(1, 1, n);
+        }
     }
     
     void update(int l, int r, int val) {
-        update_range(1, 1, n, l, r, val);
+        if (n > 0) {
+            update_range(1, 1, n, l, r, val);
+        }
     }
     
     int query(int l, int r) {
-        return query_range(1, 1, n, l, r);
+        if (n > 0) {
+            return query_range(1, 1, n, l, r);
+        }
+        return 0;
     }
 };
 
 int main() {
-    // Fast I/O
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    
     int x, k, p;
-    if (!(cin >> x >> k >> p)) {
+    if (scanf("%d %d %d", &x, &k, &p) != 3) {
+        return 0;
+    }
+    
+    // Handle edge case: if x = 1, there are no segments
+    if (x == 1) {
+        // All orders must be from station 1 to station 1, which is invalid
+        // But if we get any order, it can't be fulfilled since there's no journey
+        for (int order = 0; order < p; order++) {
+            int u, v, n;
+            scanf("%d %d %d", &u, &v, &n);
+            printf("N\n");
+        }
         return 0;
     }
     
@@ -107,7 +121,7 @@ int main() {
     
     for (int order = 0; order < p; order++) {
         int u, v, n;
-        cin >> u >> v >> n;
+        scanf("%d %d %d", &u, &v, &n);
         
         // Query maximum seat usage in the range [u, v-1]
         int max_usage = st.query(u, v - 1);
@@ -115,9 +129,9 @@ int main() {
         if (max_usage + n <= k) {
             // Order can be fulfilled, update seat usage
             st.update(u, v - 1, n);
-            cout << "T\n";
+            printf("T\n");
         } else {
-            cout << "N\n";
+            printf("N\n");
         }
     }
     
