@@ -7,29 +7,18 @@ int main() {
     int x, k, p;
     scanf("%d %d %d", &x, &k, &p);
     
-    // Handle edge case: if x = 1, there are no segments
-    if (x == 1) {
-        // All orders must be from station 1 to station 1
-        // Since there are no segments, any order can be fulfilled
-        for (int order = 0; order < p; order++) {
-            int u, v, n;
-            scanf("%d %d %d", &u, &v, &n);
-            printf("T\n");
-        }
-        return 0;
-    }
-    
-    // We need to track seat usage for segments between stations
-    // There are x-1 segments: segment i goes from station i to i+1
-    vector<int> seat_usage(x + 1, 0);  // 1-indexed, seat_usage[i] = seats used on segment i
+    // We need to track seat usage for each station
+    // seat_usage[i] = seats used at station i (for boarding/alighting)
+    vector<int> seat_usage(x + 1, 0);  // 1-indexed
     
     for (int order = 0; order < p; order++) {
         int u, v, n;
         scanf("%d %d %d", &u, &v, &n);
         
         // Check if order can be fulfilled
+        // Need to check all stations from u to v (inclusive)
         bool can_fulfill = true;
-        for (int station = u; station < v; station++) {
+        for (int station = u; station <= v; station++) {
             if (seat_usage[station] + n > k) {
                 can_fulfill = false;
                 break;
@@ -37,8 +26,8 @@ int main() {
         }
         
         if (can_fulfill) {
-            // Update seat usage for all segments in this journey
-            for (int station = u; station < v; station++) {
+            // Update seat usage for all stations in this journey
+            for (int station = u; station <= v; station++) {
                 seat_usage[station] += n;
             }
             printf("T\n");
