@@ -5,9 +5,7 @@ using namespace std;
 
 int main() {
     int x, k, p;
-    if (scanf("%d %d %d", &x, &k, &p) != 3) {
-        return 0;
-    }
+    scanf("%d %d %d", &x, &k, &p);
     
     // Handle edge case: if x = 1, there are no segments
     if (x == 1) {
