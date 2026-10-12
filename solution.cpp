@@ -11,12 +11,12 @@ int main() {
     
     // Handle edge case: if x = 1, there are no segments
     if (x == 1) {
-        // All orders must be from station 1 to station 1, which is invalid
-        // But if we get any order, it can't be fulfilled since there's no journey
+        // All orders must be from station 1 to station 1
+        // Since there are no segments, any order can be fulfilled
         for (int order = 0; order < p; order++) {
             int u, v, n;
             scanf("%d %d %d", &u, &v, &n);
-            printf("N\n");
+            printf("T\n");
         }
         return 0;
     }
